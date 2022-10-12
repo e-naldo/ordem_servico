@@ -1,10 +1,7 @@
 package dev.app.ordemservico.controller;
 
 import dev.app.ordemservico.domain.Cliente;
-import dev.app.ordemservico.dto.ClienteDetalheDto;
-import dev.app.ordemservico.dto.ClienteDto;
-import dev.app.ordemservico.dto.ClienteFormAtualizacaoDto;
-import dev.app.ordemservico.dto.ClienteFormDto;
+import dev.app.ordemservico.dto.*;
 import dev.app.ordemservico.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +42,10 @@ public class ClienteController {
         clienteService.remover(id);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/consultar")
+    public List<ClienteDto> consultarPorFiltro(@RequestBody ConsultaClienteFormDto clienteFormDto){
+        return clienteService.consultarPorFiltro(clienteFormDto);
     }
 }

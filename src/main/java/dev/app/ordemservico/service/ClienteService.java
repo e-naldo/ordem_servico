@@ -1,10 +1,7 @@
 package dev.app.ordemservico.service;
 
 import dev.app.ordemservico.domain.Cliente;
-import dev.app.ordemservico.dto.ClienteDetalheDto;
-import dev.app.ordemservico.dto.ClienteDto;
-import dev.app.ordemservico.dto.ClienteFormAtualizacaoDto;
-import dev.app.ordemservico.dto.ClienteFormDto;
+import dev.app.ordemservico.dto.*;
 import dev.app.ordemservico.exception.RecursoNaoEncontradoException;
 import dev.app.ordemservico.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +45,18 @@ public class ClienteService {
 
     public void remover(Integer id){
         clienteRepository.deleteById(id);
+    }
+
+    public List<ClienteDto> consultarPorFiltro(ConsultaClienteFormDto form){
+        List<Cliente> clientes = clienteRepository.consultaPorFiltro(
+                form.getNome(),
+                form.getDocumento(),
+                form.getEmail(),
+                form.getTelefone()
+        );
+
+        return ClienteDto.converter(clientes);
+
     }
 
 }
