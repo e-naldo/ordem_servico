@@ -48,4 +48,9 @@ public class ClienteController {
     public List<ClienteDto> consultarPorFiltro(@RequestBody ConsultaClienteFormDto clienteFormDto){
         return clienteService.consultarPorFiltro(clienteFormDto);
     }
+
+    @PostMapping("/{id}/enderecos")
+    public ClienteDetalheDto adicionarEndereco(@PathVariable Integer id, @RequestBody EnderecoDto enderecoDto){
+        return clienteService.adicionarEndereco(id, enderecoDto);
+    }
 }

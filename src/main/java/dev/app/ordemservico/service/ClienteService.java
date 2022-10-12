@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClienteService {
@@ -16,12 +15,12 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public List<ClienteDto> listarClientes(){
+    public List<ClienteDto> listarClientes() {
         List<Cliente> cliente = clienteRepository.findAll();
         return ClienteDto.converter(cliente);
     }
 
-    public ClienteDetalheDto detalhar(Integer id){
+    public ClienteDetalheDto detalhar(Integer id) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException());
         return new ClienteDetalheDto(cliente);
@@ -43,20 +42,27 @@ public class ClienteService {
         return new ClienteDetalheDto(clienteEncontrado);
     }
 
-    public void remover(Integer id){
+    public void remover(Integer id) {
         clienteRepository.deleteById(id);
     }
 
-    public List<ClienteDto> consultarPorFiltro(ConsultaClienteFormDto form){
+    public List<ClienteDto> consultarPorFiltro(ConsultaClienteFormDto form) {
         List<Cliente> clientes = clienteRepository.consultaPorFiltro(
                 form.getNome(),
                 form.getDocumento(),
                 form.getEmail(),
                 form.getTelefone()
         );
-
         return ClienteDto.converter(clientes);
+    }
 
+    public ClienteDetalheDto adicionarEndereco(Integer id, EnderecoDto enderecoDto){
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException());
+
+        cliente.adicionarEndereco(enderecoDto.converter());
+        clienteRepository.save(cliente);
+        return new ClienteDetalheDto(cliente);
     }
 
 }
