@@ -1,6 +1,5 @@
 package dev.app.ordemservico.controller;
 
-import dev.app.ordemservico.domain.Cliente;
 import dev.app.ordemservico.dto.*;
 import dev.app.ordemservico.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +27,12 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ClienteDetalheDto cadastrar(@RequestBody @Valid ClienteFormDto clienteFormDto) {
+    public ClienteDetalheDto cadastrar(@RequestBody @Valid ClienteInsertDto clienteFormDto) {
         return clienteService.cadastrar(clienteFormDto);
     }
 
     @PutMapping("/{id}")
-    public ClienteDetalheDto atualizar(@RequestBody @Valid ClienteFormAtualizacaoDto clienteFormAtualizacaoDto, @PathVariable Integer id){
+    public ClienteDetalheDto atualizar(@RequestBody @Valid ClienteUpdateDto clienteFormAtualizacaoDto, @PathVariable Integer id){
         return clienteService.atualizar(clienteFormAtualizacaoDto, id);
     }
 
@@ -44,8 +43,13 @@ public class ClienteController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/")
+    public ClienteDetalheDto consultarPorDocumento(@RequestParam String documento){
+        return clienteService.consultarPorDocumento(documento);
+    }
+
     @PostMapping("/consultar")
-    public List<ClienteDto> consultarPorFiltro(@RequestBody ConsultaClienteFormDto clienteFormDto){
+    public List<ClienteDto> consultarPorFiltro(@RequestBody ClienteConsultaDto clienteFormDto){
         return clienteService.consultarPorFiltro(clienteFormDto);
     }
 
@@ -53,4 +57,5 @@ public class ClienteController {
     public ClienteDetalheDto adicionarEndereco(@PathVariable Integer id, @RequestBody EnderecoDto enderecoDto){
         return clienteService.adicionarEndereco(id, enderecoDto);
     }
+
 }

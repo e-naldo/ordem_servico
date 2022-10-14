@@ -1,23 +1,19 @@
 package dev.app.ordemservico.dto;
 
 import dev.app.ordemservico.domain.Cliente;
-import dev.app.ordemservico.domain.Endereco;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CNPJ;
 
 import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class ClienteFormDto {
+public class ClienteUpdateDto {
 
     @NotNull
     @NotEmpty
     @Length(min = 2, max = 150)
     private String nome;
-    @NotNull @NotEmpty
-    private String tipo;
     @Size(min = 14, max = 14) @CNPJ(message = "CNPJ inválido")
     private String documento;
     @NotNull @NotBlank
@@ -28,11 +24,15 @@ public class ClienteFormDto {
     private String telefone;
     private List<EnderecoDto> enderecos = new ArrayList<>();
 
-    public ClienteFormDto() {
+    public ClienteUpdateDto() {
     }
 
-    public Cliente converter(){
-        Cliente cliente = new Cliente (nome, tipo, documento, email, site, telefone);
+    public Cliente atualizar(Cliente cliente){
+        cliente.setNome(this.nome);
+        cliente.setDocumento(this.documento);
+        cliente.setEmail(this.email);
+        cliente.setSite(this.site);
+        cliente.setTelefone(this.telefone);
         cliente.setEnderecos(EnderecoDto.converterLista(enderecos));
         return cliente;
     }
@@ -43,14 +43,6 @@ public class ClienteFormDto {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public String getDocumento() {

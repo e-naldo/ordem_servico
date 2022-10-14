@@ -1,6 +1,6 @@
 package dev.app.ordemservico.dto;
 
-public class ConsultaClienteFormDto {
+public class ClienteConsultaDto {
     private String nome;
 
     private String tipo;

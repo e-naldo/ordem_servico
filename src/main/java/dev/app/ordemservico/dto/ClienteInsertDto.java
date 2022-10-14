@@ -8,12 +8,14 @@ import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClienteFormAtualizacaoDto {
+public class ClienteInsertDto {
 
     @NotNull
     @NotEmpty
     @Length(min = 2, max = 150)
     private String nome;
+    @NotNull @NotEmpty
+    private String tipo;
     @Size(min = 14, max = 14) @CNPJ(message = "CNPJ inválido")
     private String documento;
     @NotNull @NotBlank
@@ -24,15 +26,11 @@ public class ClienteFormAtualizacaoDto {
     private String telefone;
     private List<EnderecoDto> enderecos = new ArrayList<>();
 
-    public ClienteFormAtualizacaoDto() {
+    public ClienteInsertDto() {
     }
 
-    public Cliente atualizar(Cliente cliente){
-        cliente.setNome(this.nome);
-        cliente.setDocumento(this.documento);
-        cliente.setEmail(this.email);
-        cliente.setSite(this.site);
-        cliente.setTelefone(this.telefone);
+    public Cliente converter(){
+        Cliente cliente = new Cliente (nome, tipo, documento, email, site, telefone);
         cliente.setEnderecos(EnderecoDto.converterLista(enderecos));
         return cliente;
     }
@@ -43,6 +41,14 @@ public class ClienteFormAtualizacaoDto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getDocumento() {

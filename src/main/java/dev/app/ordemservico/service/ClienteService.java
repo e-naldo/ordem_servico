@@ -26,13 +26,13 @@ public class ClienteService {
         return new ClienteDetalheDto(cliente);
     }
 
-    public ClienteDetalheDto cadastrar(ClienteFormDto clienteFormDto) {
+    public ClienteDetalheDto cadastrar(ClienteInsertDto clienteFormDto) {
         Cliente cliente = clienteFormDto.converter();
         clienteRepository.save(cliente);
         return new ClienteDetalheDto(cliente);
     }
 
-    public ClienteDetalheDto atualizar(ClienteFormAtualizacaoDto clienteFormAtualizacaoDto, Integer id) {
+    public ClienteDetalheDto atualizar(ClienteUpdateDto clienteFormAtualizacaoDto, Integer id) {
         Cliente clienteEncontrado = clienteRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException());
         Cliente cliente = clienteFormAtualizacaoDto.atualizar(clienteEncontrado);
@@ -46,7 +46,7 @@ public class ClienteService {
         clienteRepository.deleteById(id);
     }
 
-    public List<ClienteDto> consultarPorFiltro(ConsultaClienteFormDto form) {
+    public List<ClienteDto> consultarPorFiltro(ClienteConsultaDto form) {
         List<Cliente> clientes = clienteRepository.consultaPorFiltro(
                 form.getNome(),
                 form.getDocumento(),
@@ -62,6 +62,13 @@ public class ClienteService {
 
         cliente.adicionarEndereco(enderecoDto.converter());
         clienteRepository.save(cliente);
+        return new ClienteDetalheDto(cliente);
+    }
+
+    public ClienteDetalheDto consultarPorDocumento(String documento){
+        Cliente cliente = clienteRepository.findByDocumento(documento)
+                .orElseThrow(() -> new RecursoNaoEncontradoException());
+
         return new ClienteDetalheDto(cliente);
     }
 
