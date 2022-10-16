@@ -1,12 +1,14 @@
 package dev.app.ordemservico.controller;
 
-import dev.app.ordemservico.dto.*;
+import dev.app.ordemservico.dto.cliente.*;
 import dev.app.ordemservico.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -17,45 +19,85 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping
-    public List<ClienteDto> listarClientes() {
-        return clienteService.listarClientes();
+    public ResponseEntity<List<ClienteDto>> listarClientes() {
+        List<ClienteDto> listaClienteDto = clienteService.listarClientes();
+
+        return ResponseEntity.ok(listaClienteDto);
     }
 
     @GetMapping("/{id}")
-    public ClienteDetalheDto detalhar(@PathVariable Integer id) {
-        return clienteService.detalhar(id);
+    public ResponseEntity<ClienteDetalheDto> detalhar(@PathVariable Integer id) {
+
+        ClienteDetalheDto clienteDetalheDto = clienteService.detalhar(id);
+        if(clienteDetalheDto == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(clienteDetalheDto);
     }
 
     @PostMapping
-    public ClienteDetalheDto cadastrar(@RequestBody @Valid ClienteInsertDto clienteFormDto) {
-        return clienteService.cadastrar(clienteFormDto);
+    public ResponseEntity<ClienteDetalheDto> cadastrar(@Valid @RequestBody ClienteInsertDto clienteInsertDto,
+                                                       UriComponentsBuilder uriComponentsBuilder) {
+        ClienteDetalheDto clienteDetalheDto = clienteService.cadastrar(clienteInsertDto);
+
+        URI uri = uriComponentsBuilder.path("/api/v1/clientes/{id}").buildAndExpand(clienteDetalheDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(clienteDetalheDto);
     }
 
     @PutMapping("/{id}")
-    public ClienteDetalheDto atualizar(@RequestBody @Valid ClienteUpdateDto clienteFormAtualizacaoDto, @PathVariable Integer id){
-        return clienteService.atualizar(clienteFormAtualizacaoDto, id);
+    public ResponseEntity<ClienteDetalheDto> atualizar(@Valid @RequestBody ClienteUpdateDto clienteUpdateDto,
+                                                       @PathVariable Integer id) {
+        ClienteDetalheDto clienteDetalheDto = clienteService.buscarPorId(id);
+        if (clienteDetalheDto == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(clienteService.atualizar(clienteUpdateDto, id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity remover(@PathVariable Integer id){
+    public ResponseEntity remover(@PathVariable Integer id) {
+        ClienteDto clienteDto = clienteService.buscarPorId(id);
+        if (clienteDto == null) {
+            return ResponseEntity.badRequest().build();
+        }
         clienteService.remover(id);
 
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/")
-    public ClienteDetalheDto consultarPorDocumento(@RequestParam String documento){
-        return clienteService.consultarPorDocumento(documento);
+    public ResponseEntity<ClienteDetalheDto> consultarPorDocumento(@RequestParam String documento) {
+        ClienteDetalheDto clienteDetalheDto = clienteService.consultarPorDocumento(documento);
+        if (clienteDetalheDto == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(clienteDetalheDto);
     }
 
     @PostMapping("/consultar")
-    public List<ClienteDto> consultarPorFiltro(@RequestBody ClienteConsultaDto clienteFormDto){
-        return clienteService.consultarPorFiltro(clienteFormDto);
+    public ResponseEntity<List<ClienteDto>> consultarPorFiltro(@RequestBody ClienteConsultaDto clienteConsultaDto) {
+        List<ClienteDto> listaClienteDto = clienteService.consultarPorFiltro(clienteConsultaDto);
+        if (listaClienteDto.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(listaClienteDto);
     }
 
-    @PostMapping("/{id}/enderecos")
-    public ClienteDetalheDto adicionarEndereco(@PathVariable Integer id, @RequestBody EnderecoDto enderecoDto){
-        return clienteService.adicionarEndereco(id, enderecoDto);
+    @PutMapping("/{id}/enderecos")
+    public ResponseEntity<ClienteDetalheDto> adicionarEndereco(@PathVariable Integer id,
+                                                               @RequestBody EnderecoDto enderecoDto) {
+        ClienteDetalheDto clienteDetalheDto = clienteService.adicionarEndereco(id, enderecoDto);
+
+        return ResponseEntity.ok(clienteDetalheDto);
     }
 
+    @PutMapping("/{id}/enderecos/{enderecoId}")
+    public ResponseEntity<?> removerEndereco(@PathVariable Integer id, @PathVariable Integer enderecoId) {
+        try {
+            clienteService.removerEndereco(id, enderecoId);
+            return ResponseEntity.ok().build();
+        }catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

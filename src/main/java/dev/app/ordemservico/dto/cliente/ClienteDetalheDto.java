@@ -1,9 +1,8 @@
-package dev.app.ordemservico.dto;
+package dev.app.ordemservico.dto.cliente;
 
 import dev.app.ordemservico.domain.Cliente;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 

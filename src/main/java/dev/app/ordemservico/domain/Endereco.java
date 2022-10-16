@@ -1,7 +1,6 @@
 package dev.app.ordemservico.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.app.ordemservico.dto.EnderecoDto;
 
 import javax.persistence.*;
 

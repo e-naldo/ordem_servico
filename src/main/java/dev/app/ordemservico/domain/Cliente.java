@@ -58,6 +58,10 @@ public class Cliente extends EntidadeBase {
         endereco.setCliente(this);
     }
 
+    public void removerEndereco(Endereco endereco){
+        this.enderecos.remove(endereco);
+    }
+
     public String getNome() {
         return nome;
     }

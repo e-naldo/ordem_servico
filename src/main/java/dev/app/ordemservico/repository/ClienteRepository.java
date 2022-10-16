@@ -15,6 +15,9 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     Optional<Cliente> findById(Integer id);
 
     @EntityGraph(attributePaths = "enderecos")
+    Optional<Cliente> findByDocumento(String documento);
+
+    @EntityGraph(attributePaths = "enderecos")
     List<Cliente> findAll();
 
     @Query("select c from Cliente c where " +
@@ -24,6 +27,4 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
             "(:telefone is null or c.telefone like :telefone)")
     List<Cliente> consultaPorFiltro(String nome, String documento, String email, String telefone);
 
-    @EntityGraph(attributePaths = "enderecos")
-    Optional<Cliente> findByDocumento(String documento);
 }

@@ -1,4 +1,4 @@
-package dev.app.ordemservico.dto;
+package dev.app.ordemservico.dto.cliente;
 
 import dev.app.ordemservico.domain.Cliente;
 
