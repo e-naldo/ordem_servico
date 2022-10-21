@@ -2,7 +2,7 @@ package dev.app.ordemservico.service;
 
 import dev.app.ordemservico.domain.Cliente;
 import dev.app.ordemservico.domain.Endereco;
-import dev.app.ordemservico.dto.cliente.*;
+import dev.app.ordemservico.dto.*;
 import dev.app.ordemservico.exception.RecursoNaoEncontradoException;
 import dev.app.ordemservico.repository.ClienteRepository;
 import dev.app.ordemservico.repository.EnderecoRepository;
@@ -21,69 +21,50 @@ public class ClienteService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    public ClienteDetalheDto cadastrar(ClienteInsertDto clienteFormDto) {
-        Cliente cliente = clienteFormDto.converter();
-        clienteRepository.save(cliente);
 
-        return new ClienteDetalheDto(cliente);
+    public Cliente insert(Cliente cliente) {
+        return clienteRepository.save(cliente);
     }
 
-    public ClienteDetalheDto atualizar(ClienteUpdateDto clienteUpdateDto, Integer id) {
-        Cliente clienteEncontrado = clienteRepository.findById(id)
-                .orElseThrow(() -> new RecursoNaoEncontradoException());
-        Cliente cliente = clienteUpdateDto.atualizar(clienteEncontrado);
-        clienteRepository.save(cliente);
-
-        return new ClienteDetalheDto(clienteEncontrado);
+    public Cliente update(Cliente cliente, Integer id) {
+        return clienteRepository.save(cliente);
     }
 
-    public void remover(Integer id) {
+    public void remove(Integer id) {
         clienteRepository.deleteById(id);
     }
 
-    public ClienteDetalheDto buscarPorId(Integer id) {
+    public Cliente findById(Integer id) {
         Optional<Cliente> cliente = clienteRepository.findById(id);
         if (cliente.isPresent()) {
-            return new ClienteDetalheDto(cliente.get());
+            return cliente.get();
         }
         return null;
     }
 
-    public List<ClienteDto> listarClientes() {
-        List<Cliente> cliente = clienteRepository.findAll();
-
-        return ClienteDto.converter(cliente);
+    public List<Cliente> findAll() {
+        return clienteRepository.findAll();
     }
 
-    public ClienteDetalheDto detalhar(Integer id) {
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        if (!cliente.isPresent()) {
-            return null;
-        }
-        return new ClienteDetalheDto(cliente.get());
-    }
-
-    public List<ClienteDto> consultarPorFiltro(ClienteConsultaDto form) {
-        List<Cliente> clientes = clienteRepository.consultaPorFiltro(
+    public List<Cliente> findByFilter(ClienteConsultaDto form) {
+        List<Cliente> clientes = clienteRepository.findByFilter(
                 form.getNome(),
                 form.getDocumento(),
                 form.getEmail(),
                 form.getTelefone()
         );
-        return ClienteDto.converter(clientes);
+        return clientes;
     }
 
-    public ClienteDetalheDto adicionarEndereco(Integer id, EnderecoDto enderecoDto) {
+    public Cliente addEndereco(Integer id, Endereco endereco) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException());
+        cliente.adicionarEndereco(endereco);
 
-        cliente.adicionarEndereco(enderecoDto.converter());
-        clienteRepository.save(cliente);
-
-        return new ClienteDetalheDto(cliente);
+        return clienteRepository.save(cliente);
     }
 
-    public void removerEndereco(Integer id, Integer enderecoId) {
+    public void removeEndereco(Integer id, Integer enderecoId) {
         Optional<Endereco> endereco = enderecoRepository.findById(enderecoId);
         if (endereco.isPresent() && endereco.get().getCliente().getId() == id) {
             enderecoRepository.deleteById(enderecoId);
@@ -92,11 +73,11 @@ public class ClienteService {
         }
     }
 
-    public ClienteDetalheDto consultarPorDocumento(String documento) {
+    public Cliente findByDocumento(String documento) {
         Optional<Cliente> cliente = clienteRepository.findByDocumento(documento);
         if (!cliente.isPresent()) {
             return null;
         }
-        return new ClienteDetalheDto(cliente.get());
+        return cliente.get();
     }
 }

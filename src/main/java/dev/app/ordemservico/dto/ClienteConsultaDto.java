@@ -1,4 +1,4 @@
-package dev.app.ordemservico.dto.cliente;
+package dev.app.ordemservico.dto;
 
 public class ClienteConsultaDto {
     private String nome;

@@ -1,65 +1,34 @@
-package dev.app.ordemservico.domain;
+package dev.app.ordemservico.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.app.ordemservico.domain.Endereco;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "endereco")
-public class Endereco extends EntidadeBase {
-
-    @ManyToOne
-    @JsonIgnore
-    private Cliente cliente;
-
+public class EnderecoDto implements Serializable {
+    private Integer id;
     private String descricao;
-
     private String logradouro;
-
     private String numero;
-
     private String complemento;
-
     private String bairro;
-
     private String municipio;
-
     private String uf;
-
     private String cep;
-    @Column(name = "endereco_cobranca")
     private Boolean enderecoCobranca;
-
-    @Column(name = "endereco_entrega")
     private Boolean enderecoEntrega;
-
-    @Column(name = "endereco_servico")
     private Boolean enderecoServico;
 
-    public Endereco() {
+    public EnderecoDto() {
     }
 
-    public Endereco(String descricao, String logradouro, String numero, String complemento, String bairro, String municipio, String uf, String cep, Boolean enderecoCobranca, Boolean enderecoEntrega, Boolean enderecoServico) {
-        this.cliente = cliente;
-        this.descricao = descricao;
-        this.logradouro = logradouro;
-        this.numero = numero;
-        this.complemento = complemento;
-        this.bairro = bairro;
-        this.municipio = municipio;
-        this.uf = uf;
-        this.cep = cep;
-        this.enderecoCobranca = enderecoCobranca;
-        this.enderecoEntrega = enderecoEntrega;
-        this.enderecoServico = enderecoServico;
+    public Integer getId() {
+        return id;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDescricao() {
@@ -149,5 +118,4 @@ public class Endereco extends EntidadeBase {
     public void setEnderecoServico(Boolean enderecoServico) {
         this.enderecoServico = enderecoServico;
     }
-
 }

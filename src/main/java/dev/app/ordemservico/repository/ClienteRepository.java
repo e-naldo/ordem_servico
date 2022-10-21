@@ -25,6 +25,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
             "(:documento is null or c.documento like :documento) and" +
             "(:email is null or c.email like :email) and" +
             "(:telefone is null or c.telefone like :telefone)")
-    List<Cliente> consultaPorFiltro(String nome, String documento, String email, String telefone);
+    List<Cliente> findByFilter(String nome, String documento, String email, String telefone);
 
 }

@@ -1,40 +1,30 @@
-package dev.app.ordemservico.dto.cliente;
+package dev.app.ordemservico.dto;
 
-import dev.app.ordemservico.domain.Cliente;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.br.CNPJ;
-
-import javax.validation.constraints.*;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
-public class ClienteUpdateDto {
+public class ClienteDetalhesDto {
 
-    @NotNull
-    @NotEmpty
-    @Length(min = 2, max = 150)
+    private Integer id;
     private String nome;
-    @Size(min = 14, max = 14) @CNPJ(message = "CNPJ inválido")
+    private String tipo;
     private String documento;
-    @NotNull @NotBlank
-    @Email(message = "formato de email inválido")
     private String email;
     private String site;
-    @NotNull
     private String telefone;
-    private List<EnderecoDto> enderecos = new ArrayList<>();
+    private LocalDate dataCadastro;
+    private List<EnderecoDto> enderecos;
 
-   /* public ClienteUpdateDto() {
-    }*/
+    public ClienteDetalhesDto() {
+    }
 
-    public Cliente atualizar(Cliente cliente){
-        cliente.setNome(this.nome);
-        cliente.setDocumento(this.documento);
-        cliente.setEmail(this.email);
-        cliente.setSite(this.site);
-        cliente.setTelefone(this.telefone);
-        cliente.setEnderecos(EnderecoDto.converterLista(enderecos));
-        return cliente;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -43,6 +33,14 @@ public class ClienteUpdateDto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getDocumento() {
@@ -77,6 +75,14 @@ public class ClienteUpdateDto {
         this.telefone = telefone;
     }
 
+    public LocalDate getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
     public List<EnderecoDto> getEnderecos() {
         return enderecos;
     }
@@ -84,5 +90,4 @@ public class ClienteUpdateDto {
     public void setEnderecos(List<EnderecoDto> enderecos) {
         this.enderecos = enderecos;
     }
-
 }
