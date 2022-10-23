@@ -1,6 +1,7 @@
 package dev.app.ordemservico.controller;
 
 import dev.app.ordemservico.domain.Equipamento;
+import dev.app.ordemservico.dto.EquipamentoConsultaDto;
 import dev.app.ordemservico.dto.EquipamentoDto;
 import dev.app.ordemservico.dto.EquipamentoInsertDto;
 import dev.app.ordemservico.mapper.EquipamentoMapper;
@@ -37,6 +38,23 @@ public class EquipamentoController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(equipamentoMapper.toDto(equipamento));
+    }
+
+    //api/v1/equipamentos/?numeroSerie=1020071217630
+    @GetMapping("/")
+    public ResponseEntity<EquipamentoDto> findByNumeroSerie(@RequestParam String numeroSerie){
+        Equipamento equipamento = equipamentoService.findByNumeroSerie(numeroSerie);
+        if(equipamento == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(equipamentoMapper.toDto(equipamento));
+    }
+
+    @PostMapping("/consultar")
+    public ResponseEntity<List<EquipamentoDto>> findByFilter(@RequestBody EquipamentoConsultaDto consultaDto){
+        List<Equipamento> equipamentos = equipamentoService.findByFilter(consultaDto);
+
+        return ResponseEntity.ok(equipamentoMapper.toListDto(equipamentos));
     }
 
     @PostMapping

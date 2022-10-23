@@ -64,9 +64,9 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public void removeEndereco(Integer id, Integer enderecoId) {
-        Optional<Endereco> endereco = enderecoRepository.findById(enderecoId);
-        if (endereco.isPresent() && endereco.get().getCliente().getId() == id) {
+    public void removeEndereco(Integer clienteId, Integer enderecoId) {
+        Optional<Endereco> endereco = enderecoRepository.findByClienteIdAndEnderecoId(clienteId, enderecoId);
+        if (endereco.isPresent()) {
             enderecoRepository.deleteById(enderecoId);
         } else {
             throw new IllegalArgumentException();

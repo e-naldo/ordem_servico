@@ -12,13 +12,13 @@ import java.util.Optional;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     @EntityGraph(attributePaths = "enderecos")
+    List<Cliente> findAll();
+
+    @EntityGraph(attributePaths = "enderecos")
     Optional<Cliente> findById(Integer id);
 
     @EntityGraph(attributePaths = "enderecos")
     Optional<Cliente> findByDocumento(String documento);
-
-    @EntityGraph(attributePaths = "enderecos")
-    List<Cliente> findAll();
 
     @Query("select c from Cliente c where " +
             "(:nome is null or lower(c.nome) like lower(concat('%', :nome, '%'))) and" +

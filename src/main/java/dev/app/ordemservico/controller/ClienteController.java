@@ -78,6 +78,7 @@ public class ClienteController {
         return ResponseEntity.ok().build();
     }
 
+    //api/v1/clientes/?documento=1020071217630
     @GetMapping("/")
     public ResponseEntity<ClienteDetalhesDto> findByDocumento(@RequestParam String documento) {
         Cliente cliente = clienteService.findByDocumento(documento);
