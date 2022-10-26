@@ -1,9 +1,10 @@
-package dev.app.ordemservico.config.validation;
+package dev.app.ordemservico.exception;
 
 import dev.app.ordemservico.dto.ErroDeFormularioDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
-public class ErroDeValidacaoHandler {
+public class Handler {
 
     @Autowired
     private MessageSource messageSource;
@@ -35,4 +36,17 @@ public class ErroDeValidacaoHandler {
         return dto;
     }
 
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(RecursoNaoEncontradoException.class)
+    public String handle(RecursoNaoEncontradoException exception) {
+        String message = exception.getMessage();
+        return message;
+    }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public String handle(DataIntegrityViolationException exception) {
+        String message = exception.getMessage();
+        return message;
+    }
 }

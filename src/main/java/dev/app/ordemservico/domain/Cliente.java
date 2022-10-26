@@ -34,25 +34,6 @@ public class Cliente extends EntidadeBase {
     public Cliente() {
     }
 
-/*    public Cliente(String nome, String tipo, String documento, String email, String site, String telefone) {
-        this.nome = nome;
-        this.tipo = tipo;
-        this.documento = documento;
-        this.email = email;
-        this.site = site;
-        this.telefone = telefone;
-        this.dataCadastro = LocalDate.now();
-    }
-
-    public Cliente(String nome, String documento, String email, String site, String telefone) {
-        this.nome = nome;
-        this.tipo = tipo;
-        this.documento = documento;
-        this.email = email;
-        this.site = site;
-        this.telefone = telefone;
-    }*/
-
     public void adicionarEndereco(Endereco endereco){
         this.enderecos.add(endereco);
         endereco.setCliente(this);
@@ -128,5 +109,4 @@ public class Cliente extends EntidadeBase {
     public List<Endereco> getEnderecos() {
         return Collections.unmodifiableList(enderecos);
     }
-
 }

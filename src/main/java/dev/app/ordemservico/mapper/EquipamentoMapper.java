@@ -27,43 +27,60 @@ public class EquipamentoMapper {
     @Autowired
     private EnderecoService enderecoService;
 
-    public Equipamento toEntity(EquipamentoInsertDto equipamentoDto){
+    public Equipamento toEntity(EquipamentoInsertDto dto){
         Equipamento equipamento = new Equipamento();
-        equipamento.setTipoEquipamento(tipoEquipamentoService.findById(equipamentoDto.getTipoEquipamentoId()));
-        equipamento.setMarcaEquipamento(marcaEquipamentoService.findById(equipamentoDto.getMarcaEquipamentoId()));
-        equipamento.setModeloEquipamento(modeloEquipamentoService.findById(equipamentoDto.getModeloEquipamentoId()));
-        equipamento.setCliente(clienteService.findById(equipamentoDto.getClienteId()));
-        equipamento.setEndereco(enderecoService.findById(equipamentoDto.getEnderecoId()));
+        equipamento.setTipoEquipamento(tipoEquipamentoService.findById(dto.getTipoEquipamento()));
+        equipamento.setMarcaEquipamento(marcaEquipamentoService.findById(dto.getMarcaEquipamento()));
+        equipamento.setModeloEquipamento(modeloEquipamentoService.findById(dto.getModeloEquipamento()));
+        equipamento.setCliente(clienteService.findById(dto.getCliente()));
+        equipamento.setEndereco(enderecoService.findById(dto.getEndereco()));
 
-        equipamento.setNumeroSerie(equipamentoDto.getNumeroSerie());
-        equipamento.setNumeroLote(equipamentoDto.getNumeroLote());
-        equipamento.setDataFabricacao(equipamentoDto.getDataFabricacao());
-        equipamento.setDataFimGarantia(equipamentoDto.getDataFimGarantia());
-        equipamento.setDataCadastro(equipamentoDto.getDataCadastro());
-        equipamento.setObservacao(equipamentoDto.getObservacao());
-        equipamento.setInativo(equipamentoDto.getInativo());
+        equipamento.setNumeroSerie(dto.getNumeroSerie());
+        equipamento.setNumeroLote(dto.getNumeroLote());
+        equipamento.setDataFabricacao(dto.getDataFabricacao());
+        equipamento.setDataFimGarantia(dto.getDataFimGarantia());
+        equipamento.setDataCadastro(dto.getDataCadastro());
+        equipamento.setObservacao(dto.getObservacao());
+        equipamento.setInativo(dto.getInativo());
+
+        return equipamento;
+    }
+
+    public Equipamento toUpdateEntity(Equipamento equipamento, EquipamentoUpdateDto dto){
+        equipamento.setTipoEquipamento(tipoEquipamentoService.findById(dto.getTipoEquipamento()));
+        equipamento.setMarcaEquipamento(marcaEquipamentoService.findById(dto.getMarcaEquipamento()));
+        equipamento.setModeloEquipamento(modeloEquipamentoService.findById(dto.getModeloEquipamento()));
+        equipamento.setCliente(clienteService.findById(dto.getCliente()));
+        equipamento.setEndereco(enderecoService.findById(dto.getEndereco()));
+
+        equipamento.setNumeroSerie(dto.getNumeroSerie());
+        equipamento.setNumeroLote(dto.getNumeroLote());
+        equipamento.setDataFabricacao(dto.getDataFabricacao());
+        equipamento.setDataFimGarantia(dto.getDataFimGarantia());
+        equipamento.setObservacao(dto.getObservacao());
+        equipamento.setInativo(dto.getInativo());
 
         return equipamento;
     }
 
     public EquipamentoDto toDto(Equipamento equipamento){
-        EquipamentoDto equipamentoDto = new EquipamentoDto();
-        equipamentoDto.setId(equipamento.getId());
-        equipamentoDto.setTipoEquipamento(new TipoEquipamentoMapper().converterParaDto(equipamento.getTipoEquipamento()));
-        equipamentoDto.setMarcaEquipamento(new MarcaEquipamentoMapper().converterParaDto(equipamento.getMarcaEquipamento()));
-        equipamentoDto.setModeloEquipamento(new ModeloEquipamentoMapper().converterParaDto(equipamento.getModeloEquipamento()));
-        equipamentoDto.setCliente(new ClienteMapper().toBasicDto(equipamento.getCliente()));
-        equipamentoDto.setEndereco(new EnderecoMapper().converterParaDto(equipamento.getEndereco()));
+        EquipamentoDto dto = new EquipamentoDto();
+        dto.setId(equipamento.getId());
+        dto.setTipoEquipamento(new TipoEquipamentoMapper().converterParaDto(equipamento.getTipoEquipamento()));
+        dto.setMarcaEquipamento(new MarcaEquipamentoMapper().converterParaDto(equipamento.getMarcaEquipamento()));
+        dto.setModeloEquipamento(new ModeloEquipamentoMapper().converterParaDto(equipamento.getModeloEquipamento()));
+        dto.setCliente(new ClienteMapper().toBasicDto(equipamento.getCliente()));
+        dto.setEndereco(new EnderecoMapper().converterParaDto(equipamento.getEndereco()));
 
-        equipamentoDto.setNumeroSerie(equipamento.getNumeroSerie());
-        equipamentoDto.setNumeroLote(equipamento.getNumeroLote());
-        equipamentoDto.setDataFabricacao(equipamento.getDataFabricacao());
-        equipamentoDto.setDataFimGarantia(equipamento.getDataFimGarantia());
-        equipamentoDto.setDataCadastro(equipamento.getDataCadastro());
-        equipamentoDto.setObservacao(equipamento.getObservacao());
-        equipamentoDto.setInativo(equipamento.getInativo());
+        dto.setNumeroSerie(equipamento.getNumeroSerie());
+        dto.setNumeroLote(equipamento.getNumeroLote());
+        dto.setDataFabricacao(equipamento.getDataFabricacao());
+        dto.setDataFimGarantia(equipamento.getDataFimGarantia());
+        dto.setDataCadastro(equipamento.getDataCadastro());
+        dto.setObservacao(equipamento.getObservacao());
+        dto.setInativo(equipamento.getInativo());
 
-        return equipamentoDto;
+        return dto;
     }
 
     public List<EquipamentoDto> toListDto(List<Equipamento> equipamentos){

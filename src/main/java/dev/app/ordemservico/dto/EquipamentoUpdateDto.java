@@ -6,7 +6,10 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-public class EquipamentoInsertDto {
+public class EquipamentoUpdateDto {
+
+    private Integer id;
+
     @NotNull
     @Positive
     private Integer tipoEquipamento;
@@ -33,11 +36,11 @@ public class EquipamentoInsertDto {
     private String numeroLote;
     private LocalDate dataFabricacao;
     private LocalDate dataFimGarantia;
-    private LocalDate dataCadastro;
     private String observacao;
     private Boolean inativo;
 
-    public EquipamentoInsertDto(Integer tipoEquipamento, Integer marcaEquipamento, Integer modeloEquipamento, Integer cliente, Integer endereco, String numeroSerie, String numeroLote, LocalDate dataFabricacao, LocalDate dataFimGarantia, String observacao) {
+    public EquipamentoUpdateDto(Integer id, Integer tipoEquipamento, Integer marcaEquipamento, Integer modeloEquipamento, Integer cliente, Integer endereco, String numeroSerie, String numeroLote, LocalDate dataFabricacao, LocalDate dataFimGarantia, String observacao) {
+        this.id = id;
         this.tipoEquipamento = tipoEquipamento;
         this.marcaEquipamento = marcaEquipamento;
         this.modeloEquipamento = modeloEquipamento;
@@ -47,9 +50,16 @@ public class EquipamentoInsertDto {
         this.numeroLote = numeroLote;
         this.dataFabricacao = dataFabricacao;
         this.dataFimGarantia = dataFimGarantia;
-        this.dataCadastro = LocalDate.now();
         this.observacao = observacao;
         this.inativo = false;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getTipoEquipamento() {
@@ -122,14 +132,6 @@ public class EquipamentoInsertDto {
 
     public void setDataFimGarantia(LocalDate dataFimGarantia) {
         this.dataFimGarantia = dataFimGarantia;
-    }
-
-    public LocalDate getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(LocalDate dataCadastro) {
-        this.dataCadastro = dataCadastro;
     }
 
     public String getObservacao() {

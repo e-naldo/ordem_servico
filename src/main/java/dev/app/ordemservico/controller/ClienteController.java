@@ -27,6 +27,36 @@ public class ClienteController {
     @Autowired
     private EnderecoMapper enderecoMapper;
 
+    @PostMapping
+    public ResponseEntity<ClienteDetalhesDto> create(@Valid @RequestBody ClienteInsertDto clienteInsertDto,
+                                                     UriComponentsBuilder uriComponentsBuilder) {
+
+        Cliente cliente = clienteService.save(clienteMapper.toEntity(clienteInsertDto));
+        ClienteDetalhesDto clienteDetalheDto = clienteMapper.toDto(cliente);
+
+        URI uri = uriComponentsBuilder.path("/api/v1/clientes/{id}").buildAndExpand(clienteDetalheDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(clienteDetalheDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteDetalhesDto> update(@Valid @RequestBody ClienteUpdateDto dto,
+                                                     @PathVariable Integer id) {
+        if (!dto.getId().equals(id)) {
+            return ResponseEntity.badRequest().build();
+        }
+        Cliente clienteEncontrado = clienteService.findById(id);
+        Cliente cliente = clienteMapper.toUpdateEntity(clienteEncontrado, dto);
+
+        return ResponseEntity.ok(clienteMapper.toDto(clienteService.save(cliente)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Integer id) {
+        clienteService.delete(id);
+
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping
     public ResponseEntity<List<ClienteDetalhesDto>> findAll() {
         List<ClienteDetalhesDto> listaClienteDto = clienteMapper.toListDto(clienteService.findAll());
@@ -36,56 +66,13 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ClienteDetalhesDto> findById(@PathVariable Integer id) {
-
-        ClienteDetalhesDto clienteDetalheDto = clienteMapper.toDto(clienteService.findById(id));
-        if (clienteDetalheDto == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(clienteDetalheDto);
-    }
-
-    @PostMapping
-    public ResponseEntity<ClienteDetalhesDto> insert(@Valid @RequestBody ClienteInsertDto clienteInsertDto,
-                                                     UriComponentsBuilder uriComponentsBuilder) {
-
-        Cliente cliente = clienteService.insert(clienteMapper.toEntity(clienteInsertDto));
-        ClienteDetalhesDto clienteDetalheDto = clienteMapper.toDto(cliente);
-
-        URI uri = uriComponentsBuilder.path("/api/v1/clientes/{id}").buildAndExpand(clienteDetalheDto.getId()).toUri();
-        return ResponseEntity.created(uri).body(clienteDetalheDto);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ClienteDetalhesDto> update(@Valid @RequestBody ClienteUpdateDto clienteUpdateDto,
-                                                     @PathVariable Integer id) {
-        Cliente clienteEncontrado = clienteService.findById(id);
-        if (clienteEncontrado == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        Cliente cliente = clienteMapper.toUpdateEntity(clienteEncontrado, clienteUpdateDto);
-        return ResponseEntity.ok(clienteMapper.toDto(clienteService.update(cliente, id)));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity remove(@PathVariable Integer id) {
-        Cliente cliente = clienteService.findById(id);
-        if (cliente == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        clienteService.remove(id);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(clienteMapper.toDto(clienteService.findById(id)));
     }
 
     //api/v1/clientes/?documento=1020071217630
     @GetMapping("/")
     public ResponseEntity<ClienteDetalhesDto> findByDocumento(@RequestParam String documento) {
-        Cliente cliente = clienteService.findByDocumento(documento);
-        if (cliente == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(clienteMapper.toDto(cliente));
+        return ResponseEntity.ok(clienteMapper.toDto(clienteService.findByDocumento(documento)));
     }
 
     @PostMapping("/consultar")
@@ -103,13 +90,10 @@ public class ClienteController {
         return ResponseEntity.ok(clienteMapper.toDto(cliente));
     }
 
-    @PutMapping("/{id}/enderecos/{enderecoId}")
-    public ResponseEntity<?> removeEndereco(@PathVariable Integer id, @PathVariable Integer enderecoId) {
-        try {
-            clienteService.removeEndereco(id, enderecoId);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    @PutMapping("/{clienteId}/enderecos/{enderecoId}")
+    public ResponseEntity<?> removeEndereco(@PathVariable Integer clienteId, @PathVariable Integer enderecoId) {
+
+        clienteService.removeEndereco(clienteId, enderecoId);
+        return ResponseEntity.ok().build();
     }
 }

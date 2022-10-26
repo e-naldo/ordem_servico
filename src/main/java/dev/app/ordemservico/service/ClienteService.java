@@ -2,7 +2,7 @@ package dev.app.ordemservico.service;
 
 import dev.app.ordemservico.domain.Cliente;
 import dev.app.ordemservico.domain.Endereco;
-import dev.app.ordemservico.dto.*;
+import dev.app.ordemservico.dto.ClienteConsultaDto;
 import dev.app.ordemservico.exception.RecursoNaoEncontradoException;
 import dev.app.ordemservico.repository.ClienteRepository;
 import dev.app.ordemservico.repository.EnderecoRepository;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClienteService {
@@ -21,37 +20,36 @@ public class ClienteService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-
-    public Cliente insert(Cliente cliente) {
+    public Cliente save(Cliente cliente) {
         return clienteRepository.save(cliente);
     }
 
-    public Cliente update(Cliente cliente, Integer id) {
-        return clienteRepository.save(cliente);
-    }
-
-    public void remove(Integer id) {
-        clienteRepository.deleteById(id);
-    }
-
-    public Cliente findById(Integer id) {
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        if (cliente.isPresent()) {
-            return cliente.get();
-        }
-        return null;
+    public void delete(Integer id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException());
+        clienteRepository.deleteById(cliente.getId());
     }
 
     public List<Cliente> findAll() {
         return clienteRepository.findAll();
     }
 
-    public List<Cliente> findByFilter(ClienteConsultaDto form) {
+    public Cliente findById(Integer id) {
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException());
+    }
+
+    public Cliente findByDocumento(String documento) {
+     return clienteRepository.findByDocumento(documento)
+             .orElseThrow(() -> new RecursoNaoEncontradoException());
+    }
+
+    public List<Cliente> findByFilter(ClienteConsultaDto dto) {
         List<Cliente> clientes = clienteRepository.findByFilter(
-                form.getNome(),
-                form.getDocumento(),
-                form.getEmail(),
-                form.getTelefone()
+                dto.getNome(),
+                dto.getDocumento(),
+                dto.getEmail(),
+                dto.getTelefone()
         );
         return clientes;
     }
@@ -65,19 +63,8 @@ public class ClienteService {
     }
 
     public void removeEndereco(Integer clienteId, Integer enderecoId) {
-        Optional<Endereco> endereco = enderecoRepository.findByClienteIdAndEnderecoId(clienteId, enderecoId);
-        if (endereco.isPresent()) {
-            enderecoRepository.deleteById(enderecoId);
-        } else {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    public Cliente findByDocumento(String documento) {
-        Optional<Cliente> cliente = clienteRepository.findByDocumento(documento);
-        if (!cliente.isPresent()) {
-            return null;
-        }
-        return cliente.get();
+        Endereco endereco = enderecoRepository.findByClienteIdAndEnderecoId(clienteId, enderecoId)
+                .orElseThrow(() -> new RecursoNaoEncontradoException());
+           enderecoRepository.deleteById(enderecoId);
     }
 }

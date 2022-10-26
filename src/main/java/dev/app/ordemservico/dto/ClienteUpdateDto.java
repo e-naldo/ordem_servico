@@ -10,6 +10,8 @@ import java.util.List;
 
 public class ClienteUpdateDto {
 
+    private Integer id;
+
     @NotNull
     @NotEmpty
     @Length(min = 2, max = 150)
@@ -24,6 +26,14 @@ public class ClienteUpdateDto {
     private String telefone;
     private List<EnderecoDto> enderecos = new ArrayList<>();
 
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;

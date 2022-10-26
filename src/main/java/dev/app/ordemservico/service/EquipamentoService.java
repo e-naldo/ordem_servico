@@ -2,12 +2,12 @@ package dev.app.ordemservico.service;
 
 import dev.app.ordemservico.domain.Equipamento;
 import dev.app.ordemservico.dto.EquipamentoConsultaDto;
+import dev.app.ordemservico.exception.RecursoNaoEncontradoException;
 import dev.app.ordemservico.repository.EquipamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EquipamentoService {
@@ -15,30 +15,22 @@ public class EquipamentoService {
     @Autowired
     private EquipamentoRepository equipamentoRepository;
 
-    public List<Equipamento> findAll(){
-        List<Equipamento> equipamentos = equipamentoRepository.findAll();
-        return equipamentos;
+    public Equipamento save(Equipamento equipamento) {
+        return equipamentoRepository.save(equipamento);
+    }
+
+    public List<Equipamento> findAll() {
+        return equipamentoRepository.findAll();
     }
 
     public Equipamento findById(Integer id) {
-        Optional<Equipamento> equipamento = equipamentoRepository.findById(id);
-        if (equipamento.isPresent()) {
-            return equipamento.get();
-        }
-        return null;
-    }
-
-    public Equipamento insert(Equipamento equipamento){
-        equipamentoRepository.save(equipamento);
-        return equipamento;
+        return equipamentoRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException());
     }
 
     public Equipamento findByNumeroSerie(String numeroSerie) {
-        Optional<Equipamento> equipamento = equipamentoRepository.findByNumeroSerie(numeroSerie);
-        if(!equipamento.isPresent()){
-            return null;
-        }
-        return equipamento.get();
+        return equipamentoRepository.findByNumeroSerie(numeroSerie)
+                .orElseThrow(() -> new RecursoNaoEncontradoException());
     }
 
     public List<Equipamento> findByFilter(EquipamentoConsultaDto dto) {
