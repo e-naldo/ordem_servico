@@ -1,11 +1,11 @@
 package dev.app.ordemservico.dto;
 
-public class ErroDeFormularioDto {
+public class ErroDeValidacaoDto {
 
     private String campo;
     private String erro;
 
-    public ErroDeFormularioDto(String campo, String erro) {
+    public ErroDeValidacaoDto(String campo, String erro) {
         this.campo = campo;
         this.erro = erro;
     }

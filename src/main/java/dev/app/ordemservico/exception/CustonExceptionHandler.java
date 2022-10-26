@@ -1,6 +1,6 @@
 package dev.app.ordemservico.exception;
 
-import dev.app.ordemservico.dto.ErroDeFormularioDto;
+import dev.app.ordemservico.dto.ErroDeValidacaoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -16,20 +16,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
-public class Handler {
+public class CustonExceptionHandler {
 
     @Autowired
     private MessageSource messageSource;
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<ErroDeFormularioDto> handle(MethodArgumentNotValidException exception) {
-        List<ErroDeFormularioDto> dto = new ArrayList<>();
+    public List<ErroDeValidacaoDto> handle(MethodArgumentNotValidException exception) {
+        List<ErroDeValidacaoDto> dto = new ArrayList<>();
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 
         fieldErrors.forEach( e -> {
             String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-            ErroDeFormularioDto erro = new ErroDeFormularioDto(e.getField(), mensagem);
+            ErroDeValidacaoDto erro = new ErroDeValidacaoDto(e.getField(), mensagem);
             dto.add(erro);
         });
 

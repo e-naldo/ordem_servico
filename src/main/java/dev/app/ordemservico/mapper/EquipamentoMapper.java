@@ -66,7 +66,7 @@ public class EquipamentoMapper {
     public EquipamentoDto toDto(Equipamento equipamento){
         EquipamentoDto dto = new EquipamentoDto();
         dto.setId(equipamento.getId());
-        dto.setTipoEquipamento(new TipoEquipamentoMapper().converterParaDto(equipamento.getTipoEquipamento()));
+        dto.setTipoEquipamento(new TipoEquipamentoMapper().toDto(equipamento.getTipoEquipamento()));
         dto.setMarcaEquipamento(new MarcaEquipamentoMapper().converterParaDto(equipamento.getMarcaEquipamento()));
         dto.setModeloEquipamento(new ModeloEquipamentoMapper().converterParaDto(equipamento.getModeloEquipamento()));
         dto.setCliente(new ClienteMapper().toBasicDto(equipamento.getCliente()));
