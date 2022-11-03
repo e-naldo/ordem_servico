@@ -1,5 +1,8 @@
 package dev.app.ordemservico.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 public class EquipamentoDto {
@@ -14,6 +17,7 @@ public class EquipamentoDto {
     private String numeroLote;
     private LocalDate dataFabricacao;
     private LocalDate dataFimGarantia;
+    //@JsonFormat(pattern="dd/MM/yyyy")
     private LocalDate dataCadastro;
     private String observacao;
     private Boolean inativo;

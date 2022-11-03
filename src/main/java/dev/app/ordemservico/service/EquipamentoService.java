@@ -34,7 +34,7 @@ public class EquipamentoService {
     }
 
     public List<Equipamento> findByFilter(EquipamentoConsultaDto dto) {
-        List<Equipamento> equipamentos = equipamentoRepository.findByFilter(
+        List<Equipamento> equipamentos = equipamentoRepository.findAllByFilter(
                 dto.getTipoEquipamento(),
                 dto.getMarcaEquipamento(),
                 dto.getModeloEquipamento(),

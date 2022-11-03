@@ -1,6 +1,5 @@
 package dev.app.ordemservico.repository;
 
-import dev.app.ordemservico.domain.Cliente;
 import dev.app.ordemservico.domain.Equipamento;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,12 +31,14 @@ public interface EquipamentoRepository extends JpaRepository<Equipamento, Intege
             "(:dataFabricacaoFinal is null or e.dataFabricacao <= :dataFabricacaoFinal) and" +
             "(:numeroSerie is null or e.numeroSerie like :numeroSerie) and" +
             "(:inativo is null or e.inativo = :inativo)")
-    List<Equipamento> findByFilter(Integer tipoEquipamentoId,
-                                   Integer marcaEquipamentoId,
-                                   Integer modeloEquipamentoId,
-                                   Integer clienteId,
-                                   LocalDate dataFabricacaoInicial,
-                                   LocalDate dataFabricacaoFinal,
-                                   String numeroSerie,
-                                   Boolean inativo);
+    List<Equipamento> findAllByFilter(Integer tipoEquipamentoId,
+                                      Integer marcaEquipamentoId,
+                                      Integer modeloEquipamentoId,
+                                      Integer clienteId,
+                                      LocalDate dataFabricacaoInicial,
+                                      LocalDate dataFabricacaoFinal,
+                                      String numeroSerie,
+                                      Boolean inativo);
+
+    //List<Euipamento> findAllByClienteId
 }

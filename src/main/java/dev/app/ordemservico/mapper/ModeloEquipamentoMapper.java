@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ModeloEquipamentoMapper {
 
-    public ModeloEquipamento converterParaEntidade(ModeloEquipamentoDto modeloEquipamentoDto){
+    public ModeloEquipamento toEntity(ModeloEquipamentoDto modeloEquipamentoDto){
         ModeloEquipamento modeloEquipamento = new ModeloEquipamento();
         modeloEquipamento.setNome(modeloEquipamentoDto.getNome());
         return modeloEquipamento;
     }
 
-    public ModeloEquipamentoDto converterParaDto(ModeloEquipamento modeloEquipamento){
+    public ModeloEquipamentoDto toDto(ModeloEquipamento modeloEquipamento){
         ModeloEquipamentoDto modeloEquipamentoDto = new ModeloEquipamentoDto();
         modeloEquipamentoDto.setNome(modeloEquipamento.getNome());
         return modeloEquipamentoDto;

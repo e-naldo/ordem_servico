@@ -1,14 +1,8 @@
 package dev.app.ordemservico.dto;
 
-import dev.app.ordemservico.domain.MarcaEquipamento;
-
-public class MarcaEquipamentoDto {
-
+public class GrupoProdutoDto {
     private Integer id;
     private String nome;
-
-    public MarcaEquipamentoDto() {
-    }
 
     public Integer getId() {
         return id;

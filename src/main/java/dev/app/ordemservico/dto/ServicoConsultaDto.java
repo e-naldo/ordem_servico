@@ -1,14 +1,9 @@
 package dev.app.ordemservico.dto;
 
-import dev.app.ordemservico.domain.MarcaEquipamento;
-
-public class MarcaEquipamentoDto {
-
+public class ServicoConsultaDto {
     private Integer id;
+    private String referencia;
     private String nome;
-
-    public MarcaEquipamentoDto() {
-    }
 
     public Integer getId() {
         return id;
@@ -16,6 +11,14 @@ public class MarcaEquipamentoDto {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
     }
 
     public String getNome() {
