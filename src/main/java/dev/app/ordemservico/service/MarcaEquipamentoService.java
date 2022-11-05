@@ -27,12 +27,7 @@ public class MarcaEquipamentoService {
         return marcaEquipamento;
     }
 
-    public List<MarcaEquipamento> findAll(){
-        return marcaEquipamentoRepository.findAll();
-    }
-
     public List<MarcaEquipamento> findByNome(String nome) {
         return marcaEquipamentoRepository.findByNomeContainingIgnoreCase(nome);
     }
-
 }

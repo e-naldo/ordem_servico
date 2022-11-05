@@ -20,6 +20,7 @@ public class MarcaEquipamentoMapper {
 
     public MarcaEquipamentoDto toDto(MarcaEquipamento marcaEquipamento){
         MarcaEquipamentoDto marcaEquipamentoDto = new MarcaEquipamentoDto();
+        marcaEquipamentoDto.setId(marcaEquipamento.getId());
         marcaEquipamentoDto.setNome(marcaEquipamento.getNome());
         return marcaEquipamentoDto;
     }

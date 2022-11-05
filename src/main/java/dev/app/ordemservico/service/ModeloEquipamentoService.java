@@ -14,19 +14,18 @@ public class ModeloEquipamentoService {
     @Autowired
     private ModeloEquipamentoRepository modeloEquipamentoRepository;
 
-    public ModeloEquipamento save(ModeloEquipamento modeloEquipamento){
+    public ModeloEquipamento save(ModeloEquipamento modeloEquipamento) {
         return modeloEquipamentoRepository.save(modeloEquipamento);
     }
 
-    public ModeloEquipamento findById(Integer id){
-       ModeloEquipamento modeloEquipamento = modeloEquipamentoRepository.findById(id)
-               .orElseThrow(() -> new RecursoNaoEncontradoException());
+    public ModeloEquipamento findById(Integer id) {
+        ModeloEquipamento modeloEquipamento = modeloEquipamentoRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException());
 
         return modeloEquipamento;
     }
 
-    public List<ModeloEquipamento> findAll(){
-        return modeloEquipamentoRepository.findAll();
+    public List<ModeloEquipamento> findByNome(String nome) {
+        return modeloEquipamentoRepository.findByNomeContainingIgnoreCase(nome);
     }
-
 }

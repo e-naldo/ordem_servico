@@ -57,7 +57,7 @@ public class MarcaEquipamentoController {
         return ResponseEntity.ok().body(listaMarcaEquipamentoDto);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<MarcaEquipamentoDto> findById(@PathVariable Integer id) {
         MarcaEquipamentoDto marcaEquipamentoDto = mapper.toDto(service.findById(id));
         return ResponseEntity.ok().body(marcaEquipamentoDto);
