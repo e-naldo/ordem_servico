@@ -1,12 +1,8 @@
 package dev.app.ordemservico.service;
 
-import dev.app.ordemservico.domain.Equipamento;
 import dev.app.ordemservico.domain.Produto;
-import dev.app.ordemservico.dto.EquipamentoConsultaDto;
 import dev.app.ordemservico.dto.ProdutoConsultaDto;
-import dev.app.ordemservico.dto.ProdutoDto;
 import dev.app.ordemservico.exception.RecursoNaoEncontradoException;
-import dev.app.ordemservico.repository.EquipamentoRepository;
 import dev.app.ordemservico.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

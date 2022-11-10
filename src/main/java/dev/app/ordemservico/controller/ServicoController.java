@@ -45,7 +45,7 @@ public class ServicoController {
 
     @PostMapping
     public ResponseEntity<ServicoDto> create(@Valid @RequestBody ServicoInsertDto dto, UriComponentsBuilder uriComponentsBuilder){
-        Servico servico = servicoService.save(servicoMapper.toEntity(dto));
+        Servico servico = servicoService.save(servicoMapper.toInsertEntity(dto));
         ServicoDto servicoDto = servicoMapper.toDto(servico);
 
         URI uri = uriComponentsBuilder.path("/api/v1/servicos/{id}").buildAndExpand(servicoDto.getId()).toUri();

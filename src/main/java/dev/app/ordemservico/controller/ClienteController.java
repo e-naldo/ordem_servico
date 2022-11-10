@@ -28,26 +28,26 @@ public class ClienteController {
     private EnderecoMapper enderecoMapper;
 
     @PostMapping
-    public ResponseEntity<ClienteDetalhesDto> create(@Valid @RequestBody ClienteInsertDto clienteInsertDto,
-                                                     UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<ClienteDetailDto> create(@Valid @RequestBody ClienteInsertDto clienteInsertDto,
+                                                   UriComponentsBuilder uriComponentsBuilder) {
 
         Cliente cliente = clienteService.save(clienteMapper.toEntity(clienteInsertDto));
-        ClienteDetalhesDto clienteDetalheDto = clienteMapper.toDto(cliente);
+        ClienteDetailDto clienteDetalheDto = clienteMapper.toDetailDto(cliente);
 
         URI uri = uriComponentsBuilder.path("/api/v1/clientes/{id}").buildAndExpand(clienteDetalheDto.getId()).toUri();
         return ResponseEntity.created(uri).body(clienteDetalheDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteDetalhesDto> update(@Valid @RequestBody ClienteUpdateDto dto,
-                                                     @PathVariable Integer id) {
+    public ResponseEntity<ClienteDetailDto> update(@Valid @RequestBody ClienteUpdateDto dto,
+                                                   @PathVariable Integer id) {
         if (!dto.getId().equals(id)) {
             return ResponseEntity.badRequest().build();
         }
         Cliente clienteEncontrado = clienteService.findById(id);
         Cliente cliente = clienteMapper.toUpdateEntity(clienteEncontrado, dto);
 
-        return ResponseEntity.ok(clienteMapper.toDto(clienteService.save(cliente)));
+        return ResponseEntity.ok(clienteMapper.toDetailDto(clienteService.save(cliente)));
     }
 
     @DeleteMapping("/{id}")
@@ -58,36 +58,36 @@ public class ClienteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ClienteDetalhesDto>> findAll() {
-        List<ClienteDetalhesDto> listaClienteDto = clienteMapper.toListDto(clienteService.findAll());
+    public ResponseEntity<List<ClienteDetailDto>> findAll() {
+        List<ClienteDetailDto> listaClienteDto = clienteMapper.toListDto(clienteService.findAll());
 
         return ResponseEntity.ok(listaClienteDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteDetalhesDto> findById(@PathVariable Integer id) {
-        return ResponseEntity.ok(clienteMapper.toDto(clienteService.findById(id)));
+    public ResponseEntity<ClienteDetailDto> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(clienteMapper.toDetailDto(clienteService.findById(id)));
     }
 
     //api/v1/clientes/?documento=1020071217630
     @GetMapping("/")
-    public ResponseEntity<ClienteDetalhesDto> findByDocumento(@RequestParam String documento) {
-        return ResponseEntity.ok(clienteMapper.toDto(clienteService.findByDocumento(documento)));
+    public ResponseEntity<ClienteDetailDto> findByDocumento(@RequestParam String documento) {
+        return ResponseEntity.ok(clienteMapper.toDetailDto(clienteService.findByDocumento(documento)));
     }
 
     @PostMapping("/consultar")
-    public ResponseEntity<List<ClienteDetalhesDto>> findByFilter(@RequestBody ClienteConsultaDto clienteConsultaDto) {
+    public ResponseEntity<List<ClienteDetailDto>> findByFilter(@RequestBody ClienteConsultaDto clienteConsultaDto) {
         List<Cliente> listaCliente = clienteService.findByFilter(clienteConsultaDto);
 
         return ResponseEntity.ok(clienteMapper.toListDto(listaCliente));
     }
 
     @PutMapping("/{id}/enderecos")
-    public ResponseEntity<ClienteDetalhesDto> addEndereco(@PathVariable Integer id,
-                                                          @RequestBody EnderecoDto enderecoDto) {
-        Cliente cliente = clienteService.addEndereco(id, enderecoMapper.converterParaEntidade(enderecoDto));
+    public ResponseEntity<ClienteDetailDto> addEndereco(@PathVariable Integer id,
+                                                        @RequestBody EnderecoDto enderecoDto) {
+        Cliente cliente = clienteService.addEndereco(id, enderecoMapper.toEntity(enderecoDto));
 
-        return ResponseEntity.ok(clienteMapper.toDto(cliente));
+        return ResponseEntity.ok(clienteMapper.toDetailDto(cliente));
     }
 
     @PutMapping("/{clienteId}/enderecos/{enderecoId}")

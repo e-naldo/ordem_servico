@@ -12,16 +12,16 @@ import java.util.Optional;
 
 @Repository
 public interface EquipamentoRepository extends JpaRepository<Equipamento, Integer> {
-    @EntityGraph(attributePaths = {"tipoEquipamento", "marcaEquipamento", "modeloEquipamento", "cliente", "endereco"})
+    @EntityGraph(attributePaths = {"tipoEquipamento", "marcaEquipamento", "modeloEquipamento", "cliente", "enderecoLocalizacao"})
     List<Equipamento> findAll();
 
-    @EntityGraph(attributePaths = {"tipoEquipamento", "marcaEquipamento", "modeloEquipamento", "cliente", "endereco"})
+    @EntityGraph(attributePaths = {"tipoEquipamento", "marcaEquipamento", "modeloEquipamento", "cliente", "enderecoLocalizacao"})
     Optional<Equipamento> findById(Integer id);
 
-    @EntityGraph(attributePaths = {"tipoEquipamento", "marcaEquipamento", "modeloEquipamento", "cliente", "endereco"})
+    @EntityGraph(attributePaths = {"tipoEquipamento", "marcaEquipamento", "modeloEquipamento", "cliente", "enderecoLocalizacao"})
     Optional<Equipamento> findByNumeroSerie(String numeroSerie);
 
-    @EntityGraph(attributePaths = {"tipoEquipamento", "marcaEquipamento", "modeloEquipamento", "cliente", "endereco"})
+    @EntityGraph(attributePaths = {"tipoEquipamento", "marcaEquipamento", "modeloEquipamento", "cliente", "enderecoLocalizacao"})
     @Query("select e from Equipamento e where " +
             "(:tipoEquipamentoId is null or e.tipoEquipamento.id = :tipoEquipamentoId) and" +
             "(:marcaEquipamentoId is null or e.marcaEquipamento.id = :marcaEquipamentoId) and" +

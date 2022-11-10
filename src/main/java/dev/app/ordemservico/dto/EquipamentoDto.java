@@ -1,25 +1,15 @@
 package dev.app.ordemservico.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.LocalDate;
 
 public class EquipamentoDto {
 
     private Integer id;
     private TipoEquipamentoDto tipoEquipamento;
-    private MarcaEquipamentoDto marcaEquipamento;
     private ModeloEquipamentoDto modeloEquipamento;
-    private ClienteDto cliente;
-    private EnderecoDto endereco;
+    private EnderecoDto enderecoLocalizacao;
     private String numeroSerie;
-    private String numeroLote;
-    private LocalDate dataFabricacao;
     private LocalDate dataFimGarantia;
-    //@JsonFormat(pattern="dd/MM/yyyy")
-    private LocalDate dataCadastro;
-    private String observacao;
     private Boolean inativo;
 
     public EquipamentoDto() {
@@ -41,14 +31,6 @@ public class EquipamentoDto {
         this.tipoEquipamento = tipoEquipamento;
     }
 
-    public MarcaEquipamentoDto getMarcaEquipamento() {
-        return marcaEquipamento;
-    }
-
-    public void setMarcaEquipamento(MarcaEquipamentoDto marcaEquipamento) {
-        this.marcaEquipamento = marcaEquipamento;
-    }
-
     public ModeloEquipamentoDto getModeloEquipamento() {
         return modeloEquipamento;
     }
@@ -57,20 +39,12 @@ public class EquipamentoDto {
         this.modeloEquipamento = modeloEquipamento;
     }
 
-    public ClienteDto getCliente() {
-        return cliente;
+    public EnderecoDto getEnderecoLocalizacao() {
+        return enderecoLocalizacao;
     }
 
-    public void setCliente(ClienteDto cliente) {
-        this.cliente = cliente;
-    }
-
-    public EnderecoDto getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(EnderecoDto endereco) {
-        this.endereco = endereco;
+    public void setEnderecoLocalizacao(EnderecoDto enderecoLocalizacao) {
+        this.enderecoLocalizacao = enderecoLocalizacao;
     }
 
     public String getNumeroSerie() {
@@ -81,44 +55,12 @@ public class EquipamentoDto {
         this.numeroSerie = numeroSerie;
     }
 
-    public String getNumeroLote() {
-        return numeroLote;
-    }
-
-    public void setNumeroLote(String numeroLote) {
-        this.numeroLote = numeroLote;
-    }
-
-    public LocalDate getDataFabricacao() {
-        return dataFabricacao;
-    }
-
-    public void setDataFabricacao(LocalDate dataFabricacao) {
-        this.dataFabricacao = dataFabricacao;
-    }
-
     public LocalDate getDataFimGarantia() {
         return dataFimGarantia;
     }
 
     public void setDataFimGarantia(LocalDate dataFimGarantia) {
         this.dataFimGarantia = dataFimGarantia;
-    }
-
-    public LocalDate getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(LocalDate dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
-
-    public String getObservacao() {
-        return observacao;
-    }
-
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
     }
 
     public Boolean getInativo() {

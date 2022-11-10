@@ -26,7 +26,7 @@ public class Equipamento extends EntidadeBase {
 
     @ManyToOne
     @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
+    private Endereco enderecoLocalizacao;
 
     @Column(name = "numero_serie")
     private String numeroSerie;
@@ -96,12 +96,12 @@ public class Equipamento extends EntidadeBase {
         this.cliente = cliente;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public Endereco getEnderecoLocalizacao() {
+        return enderecoLocalizacao;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setEnderecoLocalizacao(Endereco enderecoLocalizacao) {
+        this.enderecoLocalizacao = enderecoLocalizacao;
     }
 
     public String getNumeroSerie() {

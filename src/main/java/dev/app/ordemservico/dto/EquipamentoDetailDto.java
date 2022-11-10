@@ -1,95 +1,73 @@
 package dev.app.ordemservico.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-public class EquipamentoInsertDto {
-    @NotNull
-    @Positive
-    private Integer tipoEquipamento;
+public class EquipamentoDetailDto {
 
-    @NotNull
-    @Positive
-    private Integer marcaEquipamento;
-
-    @NotNull
-    @Positive
-    private Integer modeloEquipamento;
-
-    @NotNull
-    @Positive
-    private Integer cliente;
-
-    @NotNull
-    @Positive
-    private Integer enderecoLocalizacao;
-    @NotNull
-    @NotBlank
-    @Size(min = 3, max = 50)
+    private Integer id;
+    private TipoEquipamentoDto tipoEquipamento;
+    private MarcaEquipamentoDto marcaEquipamento;
+    private ModeloEquipamentoDto modeloEquipamento;
+    private ClienteDto cliente;
+    private EnderecoDto enderecoLocalizacao;
     private String numeroSerie;
     private String numeroLote;
     private LocalDate dataFabricacao;
     private LocalDate dataFimGarantia;
+    //@JsonFormat(pattern="dd/MM/yyyy")
     private LocalDate dataCadastro;
     private String observacao;
     private Boolean inativo;
 
-    public EquipamentoInsertDto(Integer tipoEquipamento, Integer marcaEquipamento, Integer modeloEquipamento, Integer cliente, Integer endereco, String numeroSerie, String numeroLote, LocalDate dataFabricacao, LocalDate dataFimGarantia, String observacao) {
-        this.tipoEquipamento = tipoEquipamento;
-        this.marcaEquipamento = marcaEquipamento;
-        this.modeloEquipamento = modeloEquipamento;
-        this.cliente = cliente;
-        this.enderecoLocalizacao = endereco;
-        this.numeroSerie = numeroSerie;
-        this.numeroLote = numeroLote;
-        this.dataFabricacao = dataFabricacao;
-        this.dataFimGarantia = dataFimGarantia;
-        this.dataCadastro = LocalDate.now();
-        this.observacao = observacao;
-        this.inativo = false;
+    public EquipamentoDetailDto() {
     }
 
-    public Integer getTipoEquipamento() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public TipoEquipamentoDto getTipoEquipamento() {
         return tipoEquipamento;
     }
 
-    public void setTipoEquipamento(Integer tipoEquipamento) {
+    public void setTipoEquipamento(TipoEquipamentoDto tipoEquipamento) {
         this.tipoEquipamento = tipoEquipamento;
     }
 
-    public Integer getMarcaEquipamento() {
+    public MarcaEquipamentoDto getMarcaEquipamento() {
         return marcaEquipamento;
     }
 
-    public void setMarcaEquipamento(Integer marcaEquipamento) {
+    public void setMarcaEquipamento(MarcaEquipamentoDto marcaEquipamento) {
         this.marcaEquipamento = marcaEquipamento;
     }
 
-    public Integer getModeloEquipamento() {
+    public ModeloEquipamentoDto getModeloEquipamento() {
         return modeloEquipamento;
     }
 
-    public void setModeloEquipamento(Integer modeloEquipamento) {
+    public void setModeloEquipamento(ModeloEquipamentoDto modeloEquipamento) {
         this.modeloEquipamento = modeloEquipamento;
     }
 
-    public Integer getCliente() {
+    public ClienteDto getCliente() {
         return cliente;
     }
 
-    public void setCliente(Integer cliente) {
+    public void setCliente(ClienteDto cliente) {
         this.cliente = cliente;
     }
 
-    public Integer getEnderecoLocalizacao() {
+    public EnderecoDto getEndereco() {
         return enderecoLocalizacao;
     }
 
-    public void setEnderecoLocalizacao(Integer enderecoLocalizacao) {
-        this.enderecoLocalizacao = enderecoLocalizacao;
+    public void setEndereco(EnderecoDto endereco) {
+        this.enderecoLocalizacao = endereco;
     }
 
     public String getNumeroSerie() {

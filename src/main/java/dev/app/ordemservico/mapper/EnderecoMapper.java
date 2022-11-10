@@ -1,13 +1,7 @@
 package dev.app.ordemservico.mapper;
 
 import dev.app.ordemservico.domain.Endereco;
-import dev.app.ordemservico.domain.Equipamento;
 import dev.app.ordemservico.dto.*;
-import dev.app.ordemservico.service.ClienteService;
-import dev.app.ordemservico.service.MarcaEquipamentoService;
-import dev.app.ordemservico.service.ModeloEquipamentoService;
-import dev.app.ordemservico.service.TipoEquipamentoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,7 +10,7 @@ import java.util.stream.Collectors;
 @Component
 public class EnderecoMapper {
 
-    public Endereco converterParaEntidade(EnderecoDto enderecoDto){
+    public Endereco toEntity(EnderecoDto enderecoDto){
         Endereco endereco = new Endereco();
         endereco.setDescricao(enderecoDto.getDescricao());
         endereco.setLogradouro(enderecoDto.getLogradouro());
@@ -33,7 +27,7 @@ public class EnderecoMapper {
         return endereco;
     }
 
-    public EnderecoDto converterParaDto(Endereco endereco){
+    public EnderecoDto toDto(Endereco endereco){
         EnderecoDto enderecoDto = new EnderecoDto();
         enderecoDto.setId(endereco.getId());
         enderecoDto.setDescricao(endereco.getDescricao());
@@ -53,12 +47,12 @@ public class EnderecoMapper {
 
     public List<EnderecoDto> converterListaDto(List<Endereco> enderecos){
         //return equipamentos.stream().map(x -> new EquipamentoMapper().converterParaDto(x)).collect(Collectors.toList());
-        return enderecos.stream().map(new EnderecoMapper()::converterParaDto).collect(Collectors.toList());
+        return enderecos.stream().map(new EnderecoMapper()::toDto).collect(Collectors.toList());
     }
 
     public List<Endereco> converterListaEntidade(List<EnderecoDto> enderecos){
         //return equipamentos.stream().map(x -> new EquipamentoMapper().converterParaDto(x)).collect(Collectors.toList());
-        return enderecos.stream().map(new EnderecoMapper()::converterParaEntidade).collect(Collectors.toList());
+        return enderecos.stream().map(new EnderecoMapper()::toEntity).collect(Collectors.toList());
     }
 
 

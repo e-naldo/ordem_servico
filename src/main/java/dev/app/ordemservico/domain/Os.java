@@ -4,9 +4,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "os")
@@ -20,11 +18,6 @@ public class Os extends EntidadeBase {
     @JoinColumn(name = "equipamento_id")
     private Equipamento equipamento;
 
-    @Enumerated(EnumType.STRING)
-    private PosicaoOs posicaoOs;
-
-    private String status;
-
     @Column(name = "valor_total")
     @NumberFormat(style = NumberFormat.Style.CURRENCY, pattern = "#,##0.00")
     private BigDecimal valorTotal;
@@ -35,10 +28,10 @@ public class Os extends EntidadeBase {
     private String observacao;
 
     @OneToMany(mappedBy = "os", cascade = CascadeType.ALL)
-    private List<ItemProdutoOs> produtos = new ArrayList<>();
+    private Set<ItemProdutoOs> produtos = new HashSet<>();
 
     @OneToMany(mappedBy = "os", cascade = CascadeType.ALL)
-    private List<ItemServicoOs> servicos = new ArrayList<>();
+    private Set<ItemServicoOs> servicos = new HashSet<>();
 
     public Os() {
     }
@@ -46,15 +39,14 @@ public class Os extends EntidadeBase {
     public Os(Cliente cliente, Equipamento equipamento, String status) {
         this.cliente = cliente;
         this.equipamento = equipamento;
-        this.status = "A";
     }
 
-    public void adicionarItemProduto(ItemProdutoOs osItemProduto){
+    public void adicionarItemProduto(ItemProdutoOs osItemProduto) {
         this.produtos.add(osItemProduto);
         osItemProduto.setOs(this);
     }
 
-    public void adicionarItemServico(ItemServicoOs osItemServico){
+    public void adicionarItemServico(ItemServicoOs osItemServico) {
         this.servicos.add(osItemServico);
         osItemServico.setOs(this);
     }
@@ -73,14 +65,6 @@ public class Os extends EntidadeBase {
 
     public void setEquipamento(Equipamento equipamento) {
         this.equipamento = equipamento;
-    }
-
-    public PosicaoOs getPosicaoOs() {
-        return posicaoOs;
-    }
-
-    public void setPosicaoOs(PosicaoOs posicaoOs) {
-        this.posicaoOs = posicaoOs;
     }
 
     public BigDecimal getValorTotal() {
@@ -107,11 +91,30 @@ public class Os extends EntidadeBase {
         this.observacao = observacao;
     }
 
-    public List<ItemProdutoOs> getProdutos() {
-        return Collections.unmodifiableList(produtos);
+    public Set<ItemProdutoOs> getProdutos() {
+        return produtos;
     }
 
-    public List<ItemServicoOs> getServicos() {
-        return Collections.unmodifiableList(servicos);
+    public void setProdutos(Set<ItemProdutoOs> produtos) {
+        this.produtos = produtos;
+        for (ItemProdutoOs item : produtos){
+            item.setOs(this);
+        }
+    }
+
+    public Set<ItemServicoOs> getServicos() {
+        return servicos;
+    }
+
+    public void setServicos(Set<ItemServicoOs> servicos) {
+        this.servicos = servicos;
+        for (ItemServicoOs item : servicos){
+            item.setOs(this);
+        }
+    }
+
+    public void adicionarItemProdutoOs(ItemProdutoOs item){
+        this.produtos.add(item);
+        item.setOs(this);
     }
 }

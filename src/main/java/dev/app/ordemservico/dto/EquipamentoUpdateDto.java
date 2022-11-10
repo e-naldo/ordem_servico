@@ -28,7 +28,7 @@ public class EquipamentoUpdateDto {
 
     @NotNull
     @Positive
-    private Integer endereco;
+    private Integer enderecoLocalizacao;
     @NotNull
     @NotBlank
     @Size(min = 3, max = 50)
@@ -45,7 +45,7 @@ public class EquipamentoUpdateDto {
         this.marcaEquipamento = marcaEquipamento;
         this.modeloEquipamento = modeloEquipamento;
         this.cliente = cliente;
-        this.endereco = endereco;
+        this.enderecoLocalizacao = endereco;
         this.numeroSerie = numeroSerie;
         this.numeroLote = numeroLote;
         this.dataFabricacao = dataFabricacao;
@@ -94,12 +94,12 @@ public class EquipamentoUpdateDto {
         this.cliente = cliente;
     }
 
-    public Integer getEndereco() {
-        return endereco;
+    public Integer getEnderecoLocalizacao() {
+        return enderecoLocalizacao;
     }
 
-    public void setEndereco(Integer endereco) {
-        this.endereco = endereco;
+    public void setEnderecoLocalizacao(Integer enderecoLocalizacao) {
+        this.enderecoLocalizacao = enderecoLocalizacao;
     }
 
     public String getNumeroSerie() {

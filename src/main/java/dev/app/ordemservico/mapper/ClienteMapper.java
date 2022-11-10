@@ -20,7 +20,7 @@ public class ClienteMapper {
         cliente.setTelefone(dto.getTelefone());
         cliente.setDataCadastro(dto.getDataCadastro());
 
-        cliente.setEnderecos(dto.getEnderecos().stream().map(new EnderecoMapper()::converterParaEntidade).collect(Collectors.toList()));
+        cliente.setEnderecos(dto.getEnderecos().stream().map(new EnderecoMapper()::toEntity).collect(Collectors.toList()));
 
         return cliente;
     }
@@ -32,13 +32,13 @@ public class ClienteMapper {
         cliente.setSite(dto.getSite());
         cliente.setTelefone(dto.getTelefone());
 
-        cliente.setEnderecos(dto.getEnderecos().stream().map(new EnderecoMapper()::converterParaEntidade).collect(Collectors.toList()));
+        cliente.setEnderecos(dto.getEnderecos().stream().map(new EnderecoMapper()::toEntity).collect(Collectors.toList()));
 
         return cliente;
     }
 
-    public ClienteDetalhesDto toDto(Cliente cliente){
-        ClienteDetalhesDto dto = new ClienteDetalhesDto();
+    public ClienteDetailDto toDetailDto(Cliente cliente){
+        ClienteDetailDto dto = new ClienteDetailDto();
         dto.setId(cliente.getId());
         dto.setNome(cliente.getNome());
         dto.setTipo(cliente.getTipo());
@@ -48,12 +48,12 @@ public class ClienteMapper {
         dto.setTelefone(cliente.getTelefone());
         dto.setDataCadastro(cliente.getDataCadastro());
 
-        dto.setEnderecos(cliente.getEnderecos().stream().map(new EnderecoMapper()::converterParaDto).collect(Collectors.toList()));
+        dto.setEnderecos(cliente.getEnderecos().stream().map(new EnderecoMapper()::toDto).collect(Collectors.toList()));
 
         return dto;
     }
 
-    public ClienteDto toBasicDto(Cliente cliente){
+    public ClienteDto toDto(Cliente cliente){
         ClienteDto dto = new ClienteDto();
         dto.setId(cliente.getId());
         dto.setNome(cliente.getNome());
@@ -74,13 +74,13 @@ public class ClienteMapper {
 
         dto.setEnderecos(cliente.getEnderecos().stream()
                 .filter(x -> x.getEnderecoCobranca())
-                .map(new EnderecoMapper()::converterParaDto)
+                .map(new EnderecoMapper()::toDto)
                 .collect(Collectors.toList()));
 
         return dto;
     }
 
-    public List<ClienteDetalhesDto> toListDto(List<Cliente> clientes){
-        return clientes.stream().map(new ClienteMapper()::toDto).collect(Collectors.toList());
+    public List<ClienteDetailDto> toListDto(List<Cliente> clientes){
+        return clientes.stream().map(new ClienteMapper()::toDetailDto).collect(Collectors.toList());
     }
 }

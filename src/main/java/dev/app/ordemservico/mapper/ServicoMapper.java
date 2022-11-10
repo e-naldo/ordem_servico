@@ -17,7 +17,7 @@ public class ServicoMapper {
     @Autowired
     private ServicoService servicoService;
 
-    public Servico toEntity(ServicoInsertDto dto){
+    public Servico toInsertEntity(ServicoInsertDto dto){
         Servico servico = new Servico();
         servico.setReferencia(dto.getReferencia());
         servico.setNome(dto.getNome());
@@ -26,6 +26,18 @@ public class ServicoMapper {
 
         return servico;
     }
+
+    public Servico toEntity(ServicoDto dto){
+        Servico servico = new Servico();
+        servico.setReferencia(dto.getReferencia());
+        servico.setNome(dto.getNome());
+        servico.setDescricao(dto.getDescricao());
+        servico.setPreco(dto.getPreco());
+
+        return servico;
+    }
+
+
 
     public Servico toUpdateEntity(Servico servico, ServicoUpdateDto dto){
         servico.setReferencia(dto.getReferencia());

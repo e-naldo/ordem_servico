@@ -33,7 +33,7 @@ public class EquipamentoMapper {
         equipamento.setMarcaEquipamento(marcaEquipamentoService.findById(dto.getMarcaEquipamento()));
         equipamento.setModeloEquipamento(modeloEquipamentoService.findById(dto.getModeloEquipamento()));
         equipamento.setCliente(clienteService.findById(dto.getCliente()));
-        equipamento.setEndereco(enderecoService.findById(dto.getEndereco()));
+        equipamento.setEnderecoLocalizacao(enderecoService.findById(dto.getEnderecoLocalizacao()));
 
         equipamento.setNumeroSerie(dto.getNumeroSerie());
         equipamento.setNumeroLote(dto.getNumeroLote());
@@ -51,7 +51,7 @@ public class EquipamentoMapper {
         equipamento.setMarcaEquipamento(marcaEquipamentoService.findById(dto.getMarcaEquipamento()));
         equipamento.setModeloEquipamento(modeloEquipamentoService.findById(dto.getModeloEquipamento()));
         equipamento.setCliente(clienteService.findById(dto.getCliente()));
-        equipamento.setEndereco(enderecoService.findById(dto.getEndereco()));
+        equipamento.setEnderecoLocalizacao(enderecoService.findById(dto.getEnderecoLocalizacao()));
 
         equipamento.setNumeroSerie(dto.getNumeroSerie());
         equipamento.setNumeroLote(dto.getNumeroLote());
@@ -67,10 +67,24 @@ public class EquipamentoMapper {
         EquipamentoDto dto = new EquipamentoDto();
         dto.setId(equipamento.getId());
         dto.setTipoEquipamento(new TipoEquipamentoMapper().toDto(equipamento.getTipoEquipamento()));
+        dto.setModeloEquipamento(new ModeloEquipamentoMapper().toDto(equipamento.getModeloEquipamento()));
+        dto.setEnderecoLocalizacao(new EnderecoMapper().toDto(equipamento.getEnderecoLocalizacao()));
+
+        dto.setNumeroSerie(equipamento.getNumeroSerie());
+        dto.setDataFimGarantia(equipamento.getDataFimGarantia());
+        dto.setInativo(equipamento.getInativo());
+
+        return dto;
+    }
+
+    public EquipamentoDetailDto toDetailDto(Equipamento equipamento){
+        EquipamentoDetailDto dto = new EquipamentoDetailDto();
+        dto.setId(equipamento.getId());
+        dto.setTipoEquipamento(new TipoEquipamentoMapper().toDto(equipamento.getTipoEquipamento()));
         dto.setMarcaEquipamento(new MarcaEquipamentoMapper().toDto(equipamento.getMarcaEquipamento()));
         dto.setModeloEquipamento(new ModeloEquipamentoMapper().toDto(equipamento.getModeloEquipamento()));
-        dto.setCliente(new ClienteMapper().toBasicDto(equipamento.getCliente()));
-        dto.setEndereco(new EnderecoMapper().converterParaDto(equipamento.getEndereco()));
+        dto.setCliente(new ClienteMapper().toDto(equipamento.getCliente()));
+        dto.setEndereco(new EnderecoMapper().toDto(equipamento.getEnderecoLocalizacao()));
 
         dto.setNumeroSerie(equipamento.getNumeroSerie());
         dto.setNumeroLote(equipamento.getNumeroLote());
@@ -86,5 +100,10 @@ public class EquipamentoMapper {
     public List<EquipamentoDto> toListDto(List<Equipamento> equipamentos){
         return equipamentos.stream().map(new EquipamentoMapper()::toDto).collect(Collectors.toList());
     }
+
+    public List<EquipamentoDetailDto> toListDetailDto(List<Equipamento> equipamentos){
+        return equipamentos.stream().map(new EquipamentoMapper()::toDetailDto).collect(Collectors.toList());
+    }
+
 
 }

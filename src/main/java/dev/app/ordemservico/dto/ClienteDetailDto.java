@@ -3,7 +3,7 @@ package dev.app.ordemservico.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ClienteDetalhesDto {
+public class ClienteDetailDto {
 
     private Integer id;
     private String nome;
@@ -15,7 +15,7 @@ public class ClienteDetalhesDto {
     private LocalDate dataCadastro;
     private List<EnderecoDto> enderecos;
 
-    public ClienteDetalhesDto() {
+    public ClienteDetailDto() {
     }
 
 

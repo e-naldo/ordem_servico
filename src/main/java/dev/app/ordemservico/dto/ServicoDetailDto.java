@@ -1,10 +1,8 @@
 package dev.app.ordemservico.dto;
 
-import org.springframework.format.annotation.NumberFormat;
-
 import java.math.BigDecimal;
 
-public class ServicoDto {
+public class ServicoDetailDto {
     private Integer id;
     private String referencia;
 
@@ -13,6 +11,8 @@ public class ServicoDto {
     private String descricao;
 
     private BigDecimal preco;
+
+    private BigDecimal precoMinimo;
 
     public Integer getId() {
         return id;
@@ -54,4 +54,11 @@ public class ServicoDto {
         this.preco = preco;
     }
 
+    public BigDecimal getPrecoMinimo() {
+        return precoMinimo;
+    }
+
+    public void setPrecoMinimo(BigDecimal precoMinimo) {
+        this.precoMinimo = precoMinimo;
+    }
 }
