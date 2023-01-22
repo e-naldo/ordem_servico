@@ -31,7 +31,7 @@ public class ClienteController {
     public ResponseEntity<ClienteDetailDto> create(@Valid @RequestBody ClienteInsertDto clienteInsertDto,
                                                    UriComponentsBuilder uriComponentsBuilder) {
 
-        Cliente cliente = clienteService.save(clienteMapper.toEntity(clienteInsertDto));
+        Cliente cliente = clienteService.save(clienteMapper.toInsertEntity(clienteInsertDto));
         ClienteDetailDto clienteDetalheDto = clienteMapper.toDetailDto(cliente);
 
         URI uri = uriComponentsBuilder.path("/api/v1/clientes/{id}").buildAndExpand(clienteDetalheDto.getId()).toUri();
@@ -85,13 +85,14 @@ public class ClienteController {
     @PutMapping("/{id}/enderecos")
     public ResponseEntity<ClienteDetailDto> addEndereco(@PathVariable Integer id,
                                                         @RequestBody EnderecoDto enderecoDto) {
-        Cliente cliente = clienteService.addEndereco(id, enderecoMapper.toEntity(enderecoDto));
+        Cliente cliente = clienteService.addEndereco(id, enderecoMapper.toUpdateEntity(enderecoDto));
 
         return ResponseEntity.ok(clienteMapper.toDetailDto(cliente));
     }
 
     @PutMapping("/{clienteId}/enderecos/{enderecoId}")
-    public ResponseEntity<?> removeEndereco(@PathVariable Integer clienteId, @PathVariable Integer enderecoId) {
+    public ResponseEntity<?> removeEndereco(@PathVariable Integer clienteId,
+                                            @PathVariable Integer enderecoId) {
 
         clienteService.removeEndereco(clienteId, enderecoId);
         return ResponseEntity.ok().build();

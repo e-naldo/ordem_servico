@@ -27,10 +27,10 @@ public class Os extends EntidadeBase {
 
     private String observacao;
 
-    @OneToMany(mappedBy = "os", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "os", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ItemProdutoOs> produtos = new HashSet<>();
 
-    @OneToMany(mappedBy = "os", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "os", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ItemServicoOs> servicos = new HashSet<>();
 
     public Os() {
@@ -39,16 +39,6 @@ public class Os extends EntidadeBase {
     public Os(Cliente cliente, Equipamento equipamento, String status) {
         this.cliente = cliente;
         this.equipamento = equipamento;
-    }
-
-    public void adicionarItemProduto(ItemProdutoOs osItemProduto) {
-        this.produtos.add(osItemProduto);
-        osItemProduto.setOs(this);
-    }
-
-    public void adicionarItemServico(ItemServicoOs osItemServico) {
-        this.servicos.add(osItemServico);
-        osItemServico.setOs(this);
     }
 
     public Cliente getCliente() {
@@ -117,4 +107,15 @@ public class Os extends EntidadeBase {
         this.produtos.add(item);
         item.setOs(this);
     }
+
+    public void removerItemProdutoOs(ItemProdutoOs item){
+        this.produtos.remove(item);
+        //item.setOs(null);
+    }
+
+    public void adicionarItemServico(ItemServicoOs osItemServico) {
+        this.servicos.add(osItemServico);
+        osItemServico.setOs(this);
+    }
+
 }

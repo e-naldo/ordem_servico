@@ -8,14 +8,19 @@ import dev.app.ordemservico.repository.OsRepository;
 import dev.app.ordemservico.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OsService {
 
     @Autowired
     private OsRepository osRepository;
+
+    @Autowired
+    private ItemProdutoOsRepository itemProdutoOsRepository;
 
     public Os save(Os os){
         return osRepository.save(os);
@@ -37,6 +42,16 @@ public class OsService {
                 .orElseThrow(() -> new RecursoNaoEncontradoException());
         os.adicionarItemProdutoOs(item);
         return osRepository.save(os);
+    }
+
+    @Transactional
+    public void removeItemProdutoOs(Integer osId, Integer itemId){
+        Os os = osRepository.findById(osId)
+                        .orElseThrow(() -> new RecursoNaoEncontradoException());
+        ItemProdutoOs item = itemProdutoOsRepository.findById(itemId)
+                .orElseThrow(() -> new RecursoNaoEncontradoException());
+
+        os.removerItemProdutoOs(item);
     }
 
 }

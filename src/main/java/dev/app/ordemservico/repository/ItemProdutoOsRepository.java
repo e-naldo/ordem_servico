@@ -12,10 +12,10 @@ import java.util.Optional;
 @Repository
 public interface ItemProdutoOsRepository extends JpaRepository<ItemProdutoOs, Integer> {
 
-    @EntityGraph(attributePaths = {"cliente", "produto", "os"} )
+    @EntityGraph(attributePaths = {"produto", "os"} )
     Optional<ItemProdutoOs> findById(Integer id);
 
-    @EntityGraph(attributePaths = {"cliente", "produto", "os"} )
+    @EntityGraph(attributePaths = {"produto", "os"} )
     List<ItemProdutoOs> findAll();
 
 }

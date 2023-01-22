@@ -32,7 +32,6 @@ public class CustonExceptionHandler {
             ErroDeValidacaoDto erro = new ErroDeValidacaoDto(e.getField(), mensagem);
             dto.add(erro);
         });
-
         return dto;
     }
 

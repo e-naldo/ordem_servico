@@ -10,6 +10,40 @@ import java.util.stream.Collectors;
 @Component
 public class EnderecoMapper {
 
+    public Endereco toUpdateEntity(EnderecoDto enderecoDto){
+        Endereco endereco = new Endereco();
+        endereco.setId(enderecoDto.getId());
+        endereco.setDescricao(enderecoDto.getDescricao());
+        endereco.setLogradouro(enderecoDto.getLogradouro());
+        endereco.setNumero(enderecoDto.getNumero());
+        endereco.setComplemento(enderecoDto.getComplemento());
+        endereco.setBairro(enderecoDto.getBairro());
+        endereco.setMunicipio(enderecoDto.getMunicipio());
+        endereco.setUf(enderecoDto.getUf());
+        endereco.setCep(enderecoDto.getCep());
+        endereco.setEnderecoCobranca(enderecoDto.getEnderecoCobranca());
+        endereco.setEnderecoEntrega(enderecoDto.getEnderecoEntrega());
+        endereco.setEnderecoServico(enderecoDto.getEnderecoServico());
+
+        return endereco;
+    }
+
+    public Endereco toInsertEntity(EnderecoDto enderecoDto){
+        Endereco endereco = new Endereco();
+        endereco.setDescricao(enderecoDto.getDescricao());
+        endereco.setLogradouro(enderecoDto.getLogradouro());
+        endereco.setNumero(enderecoDto.getNumero());
+        endereco.setComplemento(enderecoDto.getComplemento());
+        endereco.setBairro(enderecoDto.getBairro());
+        endereco.setMunicipio(enderecoDto.getMunicipio());
+        endereco.setUf(enderecoDto.getUf());
+        endereco.setCep(enderecoDto.getCep());
+        endereco.setEnderecoCobranca(enderecoDto.getEnderecoCobranca());
+        endereco.setEnderecoEntrega(enderecoDto.getEnderecoEntrega());
+        endereco.setEnderecoServico(enderecoDto.getEnderecoServico());
+
+        return endereco;
+    }
     public Endereco toEntity(EnderecoDto enderecoDto){
         Endereco endereco = new Endereco();
         endereco.setDescricao(enderecoDto.getDescricao());
@@ -52,7 +86,7 @@ public class EnderecoMapper {
 
     public List<Endereco> converterListaEntidade(List<EnderecoDto> enderecos){
         //return equipamentos.stream().map(x -> new EquipamentoMapper().converterParaDto(x)).collect(Collectors.toList());
-        return enderecos.stream().map(new EnderecoMapper()::toEntity).collect(Collectors.toList());
+        return enderecos.stream().map(new EnderecoMapper()::toUpdateEntity).collect(Collectors.toList());
     }
 
 

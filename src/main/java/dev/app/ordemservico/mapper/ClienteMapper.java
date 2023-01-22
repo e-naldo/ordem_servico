@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Component
 public class ClienteMapper {
 
-    public Cliente toEntity(ClienteInsertDto dto){
+    public Cliente toInsertEntity(ClienteInsertDto dto){
         Cliente cliente = new Cliente();
         cliente.setNome(dto.getNome());
         cliente.setTipo(dto.getTipo());
@@ -20,7 +20,7 @@ public class ClienteMapper {
         cliente.setTelefone(dto.getTelefone());
         cliente.setDataCadastro(dto.getDataCadastro());
 
-        cliente.setEnderecos(dto.getEnderecos().stream().map(new EnderecoMapper()::toEntity).collect(Collectors.toList()));
+        cliente.setEnderecos(dto.getEnderecos().stream().map(new EnderecoMapper()::toInsertEntity).collect(Collectors.toList()));
 
         return cliente;
     }
@@ -32,7 +32,7 @@ public class ClienteMapper {
         cliente.setSite(dto.getSite());
         cliente.setTelefone(dto.getTelefone());
 
-        cliente.setEnderecos(dto.getEnderecos().stream().map(new EnderecoMapper()::toEntity).collect(Collectors.toList()));
+        cliente.setEnderecos(dto.getEnderecos().stream().map(new EnderecoMapper()::toUpdateEntity).collect(Collectors.toList()));
 
         return cliente;
     }
